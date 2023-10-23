@@ -1,6 +1,6 @@
 
 credentials = require('./middi/credentials.js');
-const corsOptions = require('./config/corsOptions.js');
+// const corsOptions = require('./config/corsOptions.js');
 const express =require("express")
 const fileUpload = require('express-fileupload');
 const cloudinary = require("cloudinary").v2;
@@ -16,12 +16,12 @@ app.use(fileUpload({
 app.use(express.json())
 
 
-// app.use(cors({
-//   origin: "http://localhost:3000",
-//   // origin: "https://ssu-admin.netlify.app",
-// }))
+app.use(cors({
+  origin: "http://localhost:3000",
+  
+}))
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
   
 
