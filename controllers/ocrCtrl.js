@@ -16,7 +16,7 @@ exports.ocrImageToText = async (req, res) => {
                     resource_type: "image",
                     folder: "ocrPic",
                 }
-            )
+            ) 
 
             Tesseract.recognize(
                 `${result.secure_url}`,
@@ -87,61 +87,7 @@ try{
   }
 };
 
-/*  
-exports.generateQrCode = async (req, res) => {
-    try {
 
-        if (req.files && req.files.image) {
-            const imageFile = req.files.image;
-            const result = await cloudinary.uploader.upload(
-                imageFile.tempFilePath,
-                {
-                    resource_type: "image",
-                    folder: "images", 
-                }
-            );
-
-            qr.toFile(path.join(__dirname, 'qrcode.png'), result.secure_url, (err) => {
-                if (err) {
-                    return res.status(500).json({ status: false, message: "Failed to generate QR code" });
-                }
-
-                res.sendFile(path.join(__dirname, 'qrcode.png'));
-                console.log('QR code generated successfully!');
-            });
-        } else {
-            res.status(400).json({ status: false, message: "No image file provided" });
-        }
-    } catch (err) {
-        res.status(500).json({ status: false, message: err.message });
-    }
-};
-
- */
-/* 
-exports.generateQrCode = async (req, res) => {
-    try {
-        if (req.files && req.files.imageOcr) {
-            const imageFile = req.files.imageOcr;
-            const imageFilePath = imageFile.tempFilePath;
-
-            qr.toFile(path.join(__dirname, 'qrcode.png'), imageFilePath, (err) => {
-                if (err) {
-                    return res.status(500).json({ status: false, message: "Failed to generate QR code" });
-                }
-
-                res.sendFile(path.join(__dirname, 'qrcode.png'));
-                console.log('QR code generated successfully!');
-            });
-        } else {
-            res.status(400).json({ status: false, message: "No image file provided" });
-        }
-    } catch (err) {
-        res.status(500).json({ status: false, message: err.message });
-    }
-};
-
- */
 
 exports.generateQrCode = async (req, res) => {
     try {
