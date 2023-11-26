@@ -196,7 +196,6 @@ exports.generateImageToQrCode = async (req, res) => {
 };
 
 
-
 exports.textToQrGenrator = async (req, res) => {
     try {
       const data = req.body;
@@ -217,10 +216,7 @@ exports.textToQrGenrator = async (req, res) => {
       res.status(500).json({ status: false, message: err.message });
     }
   };
-  
-
-
-
+   
 
 // no need of this already converting url to qr so doesn't matter all urlconverting into pdf
 

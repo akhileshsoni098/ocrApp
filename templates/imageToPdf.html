@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image to PDF Converter</title>
+</head>
+<body>
+  <h1>Image to PDF Converter</h1>
+  <form action="/convert/imageToPDF" method="post" enctype="multipart/form-data">
+    <input type="file" name="images" multiple accept="image/*">
+    <label for="paperSize">Paper Size:</label>
+    <select id="paperSize" name="paperSize">
+      <option value="A4">A4</option>
+      <option value="Letter">Letter</option>
+      <!-- Add more options as needed -->
+    </select>
+    <button type="submit">Convert to PDF</button>
+  </form>
+</body>
+</html>
