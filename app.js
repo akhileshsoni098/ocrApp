@@ -23,8 +23,6 @@ app.use(cors({
 
 // app.use(cors(corsOptions));
 
-  
-
 cloudinary.config({
     cloud_name: "decjoyrmj",
     api_key: "627647724186355",
@@ -33,9 +31,14 @@ cloudinary.config({
    
 //  for route
 
+const userUrlShortner = require("./Routes/urlShortnerRoute.js")
 
-const user = require("./Routes/route.js")
+const ocr = require("./Routes/ocrRoute.js")
 
-app.use("/", user)
+app.use("/shortner", userUrlShortner)
+
+app.use("/ocr", ocr)
+
+
 
 module.exports = app

@@ -6,7 +6,7 @@ const express = require("express")
 
 const app = require("./app");
 
- 
+  
  
 mongoose.connect(process.env.MONGODB_URL_LOCAL, {
     useNewUrlParser: true,
@@ -24,4 +24,4 @@ mongoose.connect(process.env.MONGODB_URL_LOCAL, {
       console.log(`App running on port ${port}` )
   })
 
-
+ 
