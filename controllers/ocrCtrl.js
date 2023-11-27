@@ -10,7 +10,6 @@ const Tesseract = require('tesseract.js');
 // const qr = require('qrcode');
 const fs = require('fs');
 const path = require('path');
-const multer = require('multer');
 
 
 exports.ocrImageToText = async (req, res) => {
@@ -19,7 +18,7 @@ exports.ocrImageToText = async (req, res) => {
 
         if (req.files && req.files.ocrPic) {
             const ocrPicFile = req.files.ocrPic;
-            console.log(ocrPicFile)
+            console.log(ocrPicFile.tempFilePath)
             const result = await cloudinary.uploader.upload(
                 ocrPicFile.tempFilePath,
                 {
@@ -93,7 +92,91 @@ exports.urlToQrGenrator = async (req, res) => {
 };
 
 
-/* 
+
+exports.generateImageToQrCode = async (req, res) => {
+    try {
+
+        if (req.files && req.files.imageOcr) {
+
+            const imageFile = req.files.imageOcr;
+
+            const result = await cloudinary.uploader.upload(
+                imageFile.tempFilePath,
+                {
+                    resource_type: "image",
+                    folder: "images",
+                }
+            );
+
+            const imageUrl = result.secure_url;
+
+            const qrImage = qr.imageSync(imageUrl, { type: 'png' });
+
+            res.set({
+                'Content-Type': 'image/png',
+                'Content-Disposition': 'attachment; filename="qrcode.png"',
+            });
+            res.send(qrImage);
+
+            console.log('QR code generated and sent for download successfully!');
+        } else {
+            res.status(400).json({ status: false, message: "No image file provided" });
+        }
+    } catch (err) {
+        res.status(500).json({ status: false, message: err.message });
+    }
+};
+
+
+exports.textToQrGenrator = async (req, res) => {
+
+    try {
+
+      const data = req.body;
+      const text = data.text;
+  
+      const qrImage = qr.imageSync(text, { type: 'png' });
+      
+      const fileName = `qrcode_${uuidv4()}.png`; 
+  
+      res.set({
+        'Content-Type': 'image/png',
+        'Content-Disposition': `attachment; filename=${fileName}`,
+      });
+      res.send(qrImage);
+  
+      console.log('QR code generated and sent for download successfully!');
+    } catch (err) {
+      res.status(500).json({ status: false, message: err.message });
+    }
+  };
+   
+
+// no need of this already converting url to qr so doesn't matter all urlconverting into pdf
+
+exports.imageUrlToQr = async (req, res)=>{
+    try {
+
+    const data = req.body
+
+    const imageUrl = data.url
+
+    qr.toFile(path.join(__dirname, 'qrcode.png'), imageUrl, (err) => {
+        if (err) {
+            return res.status(500).json({ status: false, message: "Failed to generate QR code" });
+        }
+
+        res.sendFile(path.join(__dirname, 'qrcode.png'));
+        console.log('QR code generated successfully!');
+    });
+} catch (err) {
+    res.status(500).json({ status: false, message: err.message });
+}
+
+    }
+
+
+    /* 
 
 exports.qrGenrator = async (req, res) => {
 try{
@@ -153,81 +236,3 @@ exports.generateImageToQrCode = async (req, res) => {
 };
 
  */
-
-exports.generateImageToQrCode = async (req, res) => {
-    try {
-        if (req.files && req.files.imageOcr) {
-            const imageFile = req.files.imageOcr;
-
-            const result = await cloudinary.uploader.upload(
-                imageFile.tempFilePath,
-                {
-                    resource_type: "image",
-                    folder: "images",
-                }
-            );
-
-            const imageUrl = result.secure_url;
-
-            const qrImage = qr.imageSync(imageUrl, { type: 'png' });
-
-            res.set({
-                'Content-Type': 'image/png',
-                'Content-Disposition': 'attachment; filename="qrcode.png"',
-            });
-            res.send(qrImage);
-
-            console.log('QR code generated and sent for download successfully!');
-        } else {
-            res.status(400).json({ status: false, message: "No image file provided" });
-        }
-    } catch (err) {
-        res.status(500).json({ status: false, message: err.message });
-    }
-};
-
-
-exports.textToQrGenrator = async (req, res) => {
-    try {
-      const data = req.body;
-      const text = data.text;
-  
-      const qrImage = qr.imageSync(text, { type: 'png' });
-      
-      const fileName = `qrcode_${uuidv4()}.png`; 
-  
-      res.set({
-        'Content-Type': 'image/png',
-        'Content-Disposition': `attachment; filename=${fileName}`,
-      });
-      res.send(qrImage);
-  
-      console.log('QR code generated and sent for download successfully!');
-    } catch (err) {
-      res.status(500).json({ status: false, message: err.message });
-    }
-  };
-   
-
-// no need of this already converting url to qr so doesn't matter all urlconverting into pdf
-
-exports.imageUrlToQr = async (req, res)=>{
-    try {
-
-    const data = req.body
-
-    const imageUrl = data.url
-
-    qr.toFile(path.join(__dirname, 'qrcode.png'), imageUrl, (err) => {
-        if (err) {
-            return res.status(500).json({ status: false, message: "Failed to generate QR code" });
-        }
-
-        res.sendFile(path.join(__dirname, 'qrcode.png'));
-        console.log('QR code generated successfully!');
-    });
-} catch (err) {
-    res.status(500).json({ status: false, message: err.message });
-}
-
-    }
