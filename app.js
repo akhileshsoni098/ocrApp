@@ -44,13 +44,13 @@ const pdfMerger = require("./Routes/pdfRoutes/pdfMergerRoute.js")
 const imageToPdf = require("./Routes/pdfRoutes/imageToPdfRoute.js")
 
 
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, "templates/index.html"));
-// });
-
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, "templates/imageToPdf.html"));
+  res.sendFile(path.join(__dirname, "templates/index.html"));
 });
+
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, "templates/imageToPdf.html"));
+// });
 
 
 app.use("/shortner", userUrlShortner)
