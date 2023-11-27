@@ -6,6 +6,7 @@ const fs = require('fs');
 const multer = require('multer');
 
 const storage = multer.memoryStorage();
+
 const upload = multer({ storage: storage });
 
   exports.imageToPdf = (req, res) => {
@@ -22,10 +23,8 @@ console.log(files)
        
         const paperSize = req.body.paperSize || imgToPDF.sizes.A4;
     
-    
         const pdfStream = imgToPDF(imageBuffers, paperSize);
     
-      
         res.setHeader('Content-Disposition', 'attachment; filename=output.pdf');
         res.setHeader('Content-Type', 'application/pdf');
     

@@ -3,7 +3,7 @@ credentials = require('./middi/credentials.js');
 // const corsOptions = require('./config/corsOptions.js');
 const express =require("express")
 const path = require("path")
-// const fileUpload = require('express-fileupload');
+//  const fileUpload = require('express-fileupload');
 const cloudinary = require("cloudinary").v2;
 const cors = require("cors")
 const app = express()
@@ -18,6 +18,7 @@ const app = express()
 
 app.use(express.json())
 
+app.setMaxListeners(15)
 
 app.use(cors({
   origin: "http://localhost:3000",
@@ -39,7 +40,10 @@ const userUrlShortner = require("./Routes/urlShortnerRoute.js")
 const ocr = require("./Routes/ocrRoute.js")
 
 const pdfMerger = require("./Routes/pdfRoutes/pdfMergerRoute.js")
+
 const imageToPdf = require("./Routes/pdfRoutes/imageToPdfRoute.js")
+
+
 // app.get('/', (req, res) => {
 //   res.sendFile(path.join(__dirname, "templates/index.html"));
 // });

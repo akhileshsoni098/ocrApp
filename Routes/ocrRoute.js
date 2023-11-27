@@ -1,10 +1,13 @@
-const express = require("express")
-const { ocrImageToText, ocrImageUrlToText, urlToQrGenrator, generateImageToQrCode, textToQrGenrator } = require("../controllers/ocrCtrl")
+const express = require("express");
+const fileUpload = require("express-fileupload");
+const router = express.Router();
+const { ocrImageToText, ocrImageUrlToText, urlToQrGenrator, generateImageToQrCode, textToQrGenrator } = require("../controllers/ocrCtrl");
 
-
-
-
-const router = express.Router()
+// Use Express FileUpload middleware for this router
+router.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: 'uploads/' // Define the directory for temporary file storage
+}));
 
 router.route("/imageToText").post(ocrImageToText)
 

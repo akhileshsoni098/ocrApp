@@ -1,4 +1,5 @@
 
+
 const cloudinary = require("cloudinary").v2;
 
 const qr = require('qr-image');
@@ -47,12 +48,8 @@ console.log("working", result.secure_url)
     }
 }
 
-
-
 ///////
  
-
-
 exports.ocrImageUrlToText = async (req, res) => {
     try {
        
@@ -74,11 +71,6 @@ exports.ocrImageUrlToText = async (req, res) => {
     }
 }
 
-
-
-
-
-
 exports.urlToQrGenrator = async (req, res) => {
   try {
     const data = req.body;
@@ -99,7 +91,6 @@ exports.urlToQrGenrator = async (req, res) => {
     res.status(500).json({ status: false, message: err.message });
   }
 };
-
 
 
 /* 
