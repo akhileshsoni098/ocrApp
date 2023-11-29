@@ -38,19 +38,22 @@ cloudinary.config({
 const userUrlShortner = require("./Routes/urlShortnerRoute.js")
 
 const ocr = require("./Routes/ocrRoute.js")
-
+const textTopdf = require("./Routes/textToPdf.js")
 
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, "templates/index.html"));
 });
 
-
+app.get('/textToPdf', (req, res) => {
+  res.sendFile(path.join(__dirname, "templates/textToPdf.html"));
+});
 
 app.use("/shortner", userUrlShortner)
 
 app.use("/ocr", ocr)
 
+app.use("/pdf", textTopdf )
 
 
 
