@@ -18,6 +18,7 @@ exports.textToDoc = async (req, res) => {
         res.attachment('SampleDocument.docx');
     
         // Stream the DOCX file to the response
+        
         docx.generate(res);
       } catch (error) {
         res.status(500).json({ error: error.message });
