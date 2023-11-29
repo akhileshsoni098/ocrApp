@@ -1,9 +1,7 @@
 
 const PDF = require("pdfkit");
 
-const fs = require("fs");
-
-exports.TextToPdf = async (req, res)=>{
+exports.textToPdf = async (req, res)=>{
     try {
         const { text } = req.body;
     

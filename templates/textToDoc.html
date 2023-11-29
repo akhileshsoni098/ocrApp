@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Convert to Docx</title>
+</head>
+<body>
+  <form id="textForm">
+    <label for="docText">Enter Text:</label><br>
+    <textarea id="docText" name="docText" rows="6" cols="50"></textarea><br><br>
+    <input type="submit" value="Convert to DOCX">
+  </form>
+
+  <script>
+    document.getElementById('textForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const text = document.getElementById('docText').value;
+
+      try {
+        const response = await fetch('http://localhost:3002/doc/textToDoc', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ text })
+        });
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'SampleDocument.docx';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to convert to DOCX');
+      }
+    });
+  </script>
+</body>
+</html>
