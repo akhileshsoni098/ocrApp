@@ -4,7 +4,9 @@ const PDF = require("pdfkit");
 exports.textToPdf = async (req, res)=>{
     try {
         const { text } = req.body;
-    
+        if(!text){
+            return res.status(400).json({status:false , mesage:"Please Provide some text"})
+        }
         const pdfDoc = new PDF();
         pdfDoc.text(text);
         

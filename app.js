@@ -20,10 +20,12 @@ app.use(express.json())
 
 app.setMaxListeners(15)
 
-app.use(cors({
-  origin: "http://localhost:3000",
+// app.use(cors({
+//   origin: "http://localhost:3000",
   
-}))
+// }))
+
+app.use(cors());
 
 // app.use(cors(corsOptions));
 
@@ -41,6 +43,7 @@ const ocr = require("./Routes/ocrRoute.js")
 const textTopdf = require("./Routes/textToPdfRoute.js")
 
 const textToDoc = require("./Routes/textToDocRoute.js")
+const textTotxt = require("./Routes/textToTxtRoute.js")
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, "templates/index.html"));
@@ -54,6 +57,9 @@ app.get('/textToDoc', (req, res) => {
   res.sendFile(path.join(__dirname, "templates/textToDoc.html"));
 });
 
+app.get('/textToTxt', (req, res) => {
+  res.sendFile(path.join(__dirname, "templates/toConvertTxt.html"));
+});
 
 app.use("/shortner", userUrlShortner)
 
@@ -63,5 +69,6 @@ app.use("/pdf", textTopdf )
 
 app.use("/doc", textToDoc )
  
-
+app.use("/txt", textTotxt )
+ 
 module.exports = app 
